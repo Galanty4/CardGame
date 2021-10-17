@@ -52,6 +52,11 @@ namespace CardGame.WebApi
             services.AddAuthorization();
 
             services.AddControllers();
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build"; // your publish path
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +92,14 @@ namespace CardGame.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSpa(config =>
+            {
+                config.Options.SourcePath = "ClientApp"; // your SPA path
+
+                if (env.IsDevelopment())
+                    config.UseProxyToSpaDevelopmentServer("http://localhost:3000"); // your SPA server
             });
         }
     }
