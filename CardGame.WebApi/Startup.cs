@@ -98,8 +98,10 @@ namespace CardGame.WebApi
             {
                 config.Options.SourcePath = "ClientApp"; // your SPA path
 
-                if (env.IsDevelopment())
+                if (env.IsDevelopment()) 
+                {
                     config.UseProxyToSpaDevelopmentServer("http://localhost:3000"); // your SPA server
+                }
             });
         }
     }
