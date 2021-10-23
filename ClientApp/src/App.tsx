@@ -1,11 +1,14 @@
 import React from 'react';
-import { Button } from 'antd';
 
 import './App.less';
+import GameCard from './components/Card/GameCard';
+
 
 function App() {
   return (
-    <Button>Test</Button>
+    <div style={{ margin: 64 }}>
+      <GameCard imgSrc="/placeholder2.jpg" w={200} h={315} />
+    </div>
   );
 }
 
