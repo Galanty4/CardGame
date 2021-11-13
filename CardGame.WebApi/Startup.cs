@@ -16,6 +16,7 @@ using Serilog;
 using CardGame.WebApi.Middleware;
 using CardGame.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
+using CardGame.WebApi.Hubs;
 
 namespace CardGame.WebApi
 {
@@ -31,14 +32,18 @@ namespace CardGame.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(
-                    builder => builder
-                    .SetIsOriginAllowed((t) => true)
-                    .AllowAnyMethod()
-                    .AllowCredentials()
-                    .AllowAnyHeader());
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder
+                      .WithOrigins("http://localhost:3000/")
+                      .SetIsOriginAllowed((t) => true)
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials();
+                });
             });
 
 
@@ -89,9 +94,11 @@ namespace CardGame.WebApi
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<CardGameHub>("/table");
             });
 
             app.UseSpa(config =>
