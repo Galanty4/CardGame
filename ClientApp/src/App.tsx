@@ -1,11 +1,8 @@
 import './App.less';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import Lobby from './components/Lobby/Lobby';
-import Table from './components/Table/Table';
-import GameCard from './components/Card/GameCard';
-import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { Route, Routes } from 'react-router-dom';
+import Main from './pages/main/main';
 
 
 function App() {
@@ -43,13 +40,13 @@ function App() {
     }
   }
 
-  return <div style={{ margin: 64 }} className='app'>
-    <GameCard imgSrc="/placeholder2.jpg" w={200} h={315} />
-    <h2>Herringstone Lobby</h2>
-    {!connection
-      ? <Lobby joinRoom={joinRoom} />
-      : <Table sendMessage={sendMessage} messages={messages} />}
-  </div>;
+    return (
+    <div className="app">
+      <Routes>
+        <Route path="/"  element={<Main />}/>
+      </Routes>
+    </div>
+  )
 }
 
 export default App;
