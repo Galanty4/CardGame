@@ -33,6 +33,7 @@ namespace CardGame.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>

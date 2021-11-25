@@ -12,7 +12,7 @@ namespace CardGame.WebApi.Hubs
 
         public CardGameHub()
         {
-            _botUser = "MyChat Bot";
+            _botUser = "Game Master";
         }
 
         public async Task JoinRoom(UserConnection userConnection)
