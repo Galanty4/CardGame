@@ -4,14 +4,16 @@ using CardGame.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CardGame.DAL.Migrations
 {
     [DbContext(typeof(CardGameDbContext))]
-    partial class CardGameDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211126003129_Add_Card_and_Deck_and_DeckCard_Entitie")]
+    partial class Add_Card_and_Deck_and_DeckCard_Entitie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

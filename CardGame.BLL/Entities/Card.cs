@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CardGame.BLL.Entities;
 using CardGame.BLL.Models.Dto;
 
 namespace CardGame.BLL.Models
@@ -12,6 +13,7 @@ namespace CardGame.BLL.Models
         public int Energy { get; set; }
         public int Health { get; set; }
         public int Demage { get; set; }
+        public ICollection<DeckCard> DeckCard { get; set; }
 
         public Card(CardDto card)
         {

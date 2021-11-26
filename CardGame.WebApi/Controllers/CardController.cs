@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CardGame.BLL.Models.Dto;
 using CardGame.BLL.Services.Interfaces;
@@ -57,7 +55,5 @@ namespace CardGame.WebApi.Controllers
 
             return Ok();
         }
-
-
     }
 }

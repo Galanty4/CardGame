@@ -20,7 +20,6 @@ namespace CardGame.BLL.Models.Dto
             Energy = card.Energy;
             Health = card.Health;
             Demage = card.Demage;
-
         }
         public CardDto() { }
     }

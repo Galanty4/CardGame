@@ -17,9 +17,9 @@ namespace CardGame.Services.Internal
         {
             _cardRepository = cardRepository;
         }
-        public async Task<CardDto> AddAsync(CardDto card)
+        public async Task<CardDto> AddAsync(CardDto cardDto)
         {
-            var cardEntry = await _cardRepository.AddAsync(new Card(card));
+            var cardEntry = await _cardRepository.AddAsync(new Card(cardDto));
             await _cardRepository.SaveAsync();
             return new CardDto(cardEntry);
         }
@@ -56,8 +56,6 @@ namespace CardGame.Services.Internal
             await _cardRepository.SaveAsync();
 
             return new CardDto(await _cardRepository.GetAsync(foundCardEntry.Id));
-
-
         }
     }
 }

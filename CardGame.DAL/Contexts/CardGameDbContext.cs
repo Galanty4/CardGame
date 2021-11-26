@@ -9,12 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using CardGame.BLL.Entities;
+using CardGame.DAL.Configuration;
 
 namespace CardGame.DAL.Contexts
 {
     public class CardGameDbContext : DbContext
     {
-        public DbSet<Card> Card { get; set; }
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<Deck> Decks { get; set; }
+        public DbSet<DeckCard> DecksCard { get; set; }
 
         private readonly string CurrentUser;
          public CardGameDbContext(DbContextOptions<CardGameDbContext> options, IUserResolverService userResolverService) : base(options)
@@ -25,6 +29,11 @@ namespace CardGame.DAL.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // add you configurations here
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new DeckConfiguration());
+            modelBuilder.ApplyConfiguration(new CardConfiguration());
+            modelBuilder.ApplyConfiguration(new DeckCardConfiguration());
 
             var entityTypes = modelBuilder.Model.GetEntityTypes().Select(t => t.ClrType).ToList();
 
@@ -33,8 +42,6 @@ namespace CardGame.DAL.Contexts
                 if (type.IsSubclassOf(typeof(BaseEntity)))
                     modelBuilder.Entity(type).HasQueryFilter(GetSoftDeleteFilter(type));
             });
-
-            base.OnModelCreating(modelBuilder);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
