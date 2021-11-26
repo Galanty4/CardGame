@@ -1,6 +1,6 @@
 import { connection } from ".";
 
-export const joinRoom  = async (user: string, room: string) => {
+export const joinRoom = async (user: string, room: string) => {
   try {
     await connection.invoke("JoinRoom", { user, room });
   } catch (e) {

@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React from "react";
 
@@ -19,6 +19,9 @@ const Main: React.FC = () => {
             </Form.Item>
             <Form.Item label="Nazwa pokoju">
               <Input />
+            </Form.Item>
+            <Form.Item className="login__btn">
+              <Button type="primary" htmlType="submit">Dołącz</Button>
             </Form.Item>
           </Form>
         </div>
