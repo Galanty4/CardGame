@@ -26,7 +26,7 @@ const Room: React.FC = () => {
           {user.session.messages.map((el) => (
             <Row className={el.user === user.session.name ? "room__user-message-container" : "room__opponent-message-container"}>
               <div className={el.user === user.session.name ? "room__user-message" :"room__opponent-message"}>
-                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, laborum! Architecto officiis repudiandae et eveniet expedita nobis temporibus, at ratione, veritatis harum nisi distinctio reiciendis animi id vel, quae error.
+                 {el.message}
                 <div className="room__nickname">Opponent</div>
               </div>
             </Row>
