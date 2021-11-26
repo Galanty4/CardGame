@@ -1,0 +1,49 @@
+@import '../../styles/variables.less';
+
+.room {
+  width: 100%;
+  height: 100%;
+  
+  &__chat-container {
+    padding: 24px;
+    border-left: 2px solid @bg-border;
+    background-color: @bg-secondary;
+  }
+
+  &__chat {
+    height: 90%;
+    justify-content: flex-end;
+    flex-flow: column !important;
+  }
+
+  &__opponent-message-container, &__user-message-container  {
+    height: max-content;
+    margin-top: 24px;
+    box-shadow: @box-shadow-light;
+  }
+
+  &__opponent-message {
+    background-color: @bg-light;
+    padding: 12px;
+    color: @white;
+    border-radius: 6px;
+  }
+
+  &__user-message {
+    background-color: @primary;
+    padding: 12px;
+    color: @black;
+    border-radius: 6px;
+  }
+
+  &__nickname {
+    text-align: right;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  &__chat-input-container {
+    height: 10%;
+    padding-top: 24px;
+  }
+}
