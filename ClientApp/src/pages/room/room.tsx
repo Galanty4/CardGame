@@ -23,8 +23,8 @@ const Room: React.FC = () => {
       </Col>
       <Col span={6} className="room__chat-container">
         <Row className="room__chat">
-          {user.session.messages.map((el) => (
-            <Row className={el.user === user.session.name ? "room__user-message-container" : "room__opponent-message-container"}>
+          {user.session.messages.map((el, index) => (
+            <Row key={index} className={el.user === user.session.name ? "room__user-message-container" : "room__opponent-message-container"}>
               <div className={el.user === user.session.name ? "room__user-message" :"room__opponent-message"}>
                  {el.message}
                 <div className="room__nickname">{el.user}</div>
