@@ -27,7 +27,7 @@ const Room: React.FC = () => {
             <Row className={el.user === user.session.name ? "room__user-message-container" : "room__opponent-message-container"}>
               <div className={el.user === user.session.name ? "room__user-message" :"room__opponent-message"}>
                  {el.message}
-                <div className="room__nickname">Opponent</div>
+                <div className="room__nickname">{el.user}</div>
               </div>
             </Row>
           ))}
