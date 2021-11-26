@@ -9,5 +9,11 @@ export interface UserState {
 export interface Session {
     room: string;
     name: string;
+    messages: ChatMessage[];
 }
 
+
+export interface ChatMessage {
+    user: string;
+    message: string;
+}
