@@ -18,11 +18,6 @@ namespace CardGame.WebApi.Hubs
             _connections = connections;
         }
 
-        public CardGameHub()
-        {
-            _botUser = "Game Master";
-        }
-
         public async Task JoinRoom(UserConnection userConnection)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, userConnection.Room);
