@@ -1,6 +1,6 @@
 import { Col, Row, Input, Button} from 'antd';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { sendMessage } from '../../signalR/invokers';
 import { RootState } from '../../store';
@@ -16,6 +16,21 @@ const Room: React.FC = () => {
     setText('');
   }
 
+  const onEnterClick = useCallback((e: KeyboardEvent) => {
+    if (e.key !== 'Enter') {
+      return;
+    }
+    sendMessage(text);
+    setText('');
+  }, [text])
+
+  useEffect(() => {
+    document.addEventListener('keydown', onEnterClick);
+    return () => {
+      document.removeEventListener('keydown', onEnterClick);
+    }
+  }, [text, onEnterClick])
+
   return (
     <Row className="room">
       <Col span={18}>
@@ -23,8 +38,8 @@ const Room: React.FC = () => {
       </Col>
       <Col span={6} className="room__chat-container">
         <Row className="room__chat">
-          {user.session.messages.map((el) => (
-            <Row className={el.user === user.session.name ? "room__user-message-container" : "room__opponent-message-container"}>
+          {user.session.messages.map((el, index) => (
+            <Row key={index} className={el.user === user.session.name ? "room__user-message-container" : "room__opponent-message-container"}>
               <div className={el.user === user.session.name ? "room__user-message" :"room__opponent-message"}>
                  {el.message}
                 <div className="room__nickname">{el.user}</div>
@@ -33,7 +48,7 @@ const Room: React.FC = () => {
           ))}
         </Row>
         <Row className="room__chat-input-container">
-          <Input.TextArea onChange={(e) => setText(e.target.value)} className="room__chat-input" />
+          <Input.TextArea value={text} onChange={(e) => setText(e.target.value)} className="room__chat-input" />
           <Col span={24} className="room__chat-btn ">
             <Button onClick={onSend} type="primary">Wyślij</Button>
           </Col>
