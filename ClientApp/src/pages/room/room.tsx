@@ -1,21 +1,25 @@
-import { Col, Row, Input, Button} from 'antd';
+import { Col, Row, Input, Button } from 'antd';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { sendMessage } from '../../signalR/invokers';
 import { RootState } from '../../store';
-import { Scrollbars } from 'react-custom-scrollbars-2';
 
 import './room.less';
 
 const Room: React.FC = () => {
   const [text, setText] = useState('');
   const user = useSelector((state: RootState) => state.userReducer);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const onSend = () => {
     sendMessage(text);
     setText('');
   }
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView()
+  }, [scrollRef])
 
   const onEnterClick = useCallback((e: KeyboardEvent) => {
     if (e.key !== 'Enter') {
@@ -32,6 +36,10 @@ const Room: React.FC = () => {
     }
   }, [text, onEnterClick])
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView();
+  }, [user.session.messages])
+
   return (
     <Row className="room">
       <Col span={18}>
@@ -47,6 +55,7 @@ const Room: React.FC = () => {
                 </div>
               </Row>
             ))}
+            <div ref={scrollRef} style={{ float:"left", clear: "both" }}></div>
           </div>
         <Row className="room__chat-input-container">
           <Input.TextArea value={text} onChange={(e) => setText(e.target.value)} className="room__chat-input" />

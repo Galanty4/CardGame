@@ -15,10 +15,8 @@
   }
 
   &__chat {
-    flex: 1;
     overflow-y: auto;
-    justify-content: flex-end;
-    flex-flow: column !important;
+    display: grid;
     padding-right: 24px;
     padding-bottom: 12px;
     min-height: 0;
@@ -26,6 +24,7 @@
 
   &__opponent-message-container, &__user-message-container  {
     height: max-content;
+    align-self: end;
     margin-top: 24px;
     box-shadow: @box-shadow-light;
   }
