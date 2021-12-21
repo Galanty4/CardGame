@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CardGame.BLL.Models;
+﻿using CardGame.BLL.Models;
 using CardGame.BLL.Repositories;
 using CardGame.DAL.Contexts;
 

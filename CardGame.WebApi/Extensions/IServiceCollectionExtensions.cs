@@ -23,6 +23,10 @@ namespace CardGame.Extensions
             services.AddScoped<ICardService, CardService>();
             services.AddScoped<ICardRepository, CardRepository>();
             services.AddScoped<IUserResolverService, UserResolverService>();
+            services.AddScoped<IDeckService, DeckService>();
+            services.AddScoped<IDeckRepository, DeckRepository>();
+            services.AddScoped<IDeckCardService, DeckCardService>();
+            services.AddScoped<IDeckCardRepository, DeckCardRepository>();
         }
 
         public static void AddDbContexts(this IServiceCollection services, IConfiguration configuration)
