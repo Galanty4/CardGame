@@ -77,26 +77,30 @@ const Room: React.FC = () => {
           <Row className='room__deck-area room__deck-area--top'>
             {enemyState.cardsInHand.map((el) => (
               <div className='room__card' key={el.id}>
-                <GameCard id={el.id} w="200px" h="max-content" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+                <GameCard defaultFlipped flippable  id={el.id} w="200px" h="270px" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
               </div>
             ))}
           </Row>
         <Row className="room__gaming-area ">
           {enemyState.activeCards.map((el) => (
-            <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+            <div className='room__card-object'>
+              <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+            </div>
           ))}
         </Row>
         </Row>
         <Row className='room__player'>
           <Row className="room__gaming-area" ref={ref} style={{backgroundColor: isOverCurrent ? '#757575' : '#424242'}}>
           {playerState.activeCards.map((el) => (
-            <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+            <div className='room__card-object'>
+              <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+            </div>
           ))}
           </Row>
           <Row className='room__deck-area room__deck-area--bottom'>
           {playerState.cardsInHand.map((el) => (
-              <div className='room__card' key={el.id}>
-                <GameCard draggable id={el.id} w="200px" h="max-content" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+              <div className='room__card room__card--player' key={el.id}>
+                <GameCard draggable id={el.id} w="200px"  h="270px" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
               </div>
             ))}
           </Row>
