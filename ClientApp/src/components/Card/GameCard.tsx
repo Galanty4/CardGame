@@ -22,7 +22,7 @@ const GameCard: React.FC<IGameCard> = (props) => {
       canDrag: draggable,
       item: { id },
       collect: (monitor) => ({
-        opacity: monitor.isDragging() ? 0 : 1
+        opacity: monitor.isDragging() ? 0 : 1,
       })
     }),
     []

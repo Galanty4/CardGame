@@ -2,11 +2,14 @@ import { Col, Row, Input, Button } from 'antd';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GameCard from '../../components/Card/GameCard';
+import CardObject from '../../components/CardObject/CardObject';
 import { ItemTypes } from '../../dragndrop/itemtypes';
 import { sendMessage } from '../../signalR/invokers';
 import { RootState } from '../../store';
+import { Id } from '../../store/generics/generics';
+import { makeMove } from '../../store/room/actions';
 
 import './room.less';
 
@@ -14,6 +17,7 @@ const Room: React.FC = () => {
   const [text, setText] = useState('');
   const user = useSelector((state: RootState) => state.userReducer);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
   const {enemyState, playerState} = useSelector((state: RootState) => state.room);
   const ref = useRef<HTMLDivElement>(null);
   const onSend = () => {
@@ -51,7 +55,18 @@ const Room: React.FC = () => {
           hovered: monitor.isOver(),
           canDrop: monitor.canDrop(),
           isOverCurrent: monitor.isOver({ shallow: true })
-    })
+    }),
+    drop: (item: {id: Id}) => {
+      const cardIndex = playerState.cardsInHand.findIndex((el) => el.id === item.id);
+
+      if (cardIndex !== -1) {
+        const cardCopy = {...playerState.cardsInHand[cardIndex]};
+        const activeCards = [...playerState.activeCards];
+        activeCards.push(cardCopy)
+        const cardsInHand = playerState.cardsInHand.filter((el) => el.id !== item.id);
+        dispatch(makeMove({activeCards, cardsInHand, player: 'player'}))
+      }
+    }
   });
 
   drop(ref)
@@ -66,10 +81,18 @@ const Room: React.FC = () => {
               </div>
             ))}
           </Row>
-        <Row className="room__gaming-area "></Row>
+        <Row className="room__gaming-area ">
+          {enemyState.activeCards.map((el) => (
+            <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+          ))}
+        </Row>
         </Row>
         <Row className='room__player'>
-          <Row className="room__gaming-area" ref={ref} style={{backgroundColor: isOverCurrent ? '#757575' : '#424242'}}></Row>
+          <Row className="room__gaming-area" ref={ref} style={{backgroundColor: isOverCurrent ? '#757575' : '#424242'}}>
+          {playerState.activeCards.map((el) => (
+            <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+          ))}
+          </Row>
           <Row className='room__deck-area room__deck-area--bottom'>
           {playerState.cardsInHand.map((el) => (
               <div className='room__card' key={el.id}>
