@@ -47,6 +47,7 @@ namespace CardGame.WebApi
                 });
             });
 
+            services.AddSingleton<IDictionary<string, UserConnection>>(opts => new Dictionary<string, UserConnection>()); 
 
             services.AddHttpContextAccessor();
             services.AddDbContexts(Configuration);

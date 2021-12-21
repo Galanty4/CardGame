@@ -1,0 +1,112 @@
+@import '../../styles/variables.less';
+
+.room {
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+  &__chat-container {
+    padding-left: 24px;
+    border-left: 2px solid @bg-border;
+    background-color: @bg-secondary;
+    display: flex !important;
+    flex-flow: column !important;
+    justify-content: flex-end;
+    height: 100vh;
+  }
+
+  &__chat {
+    overflow-y: auto;
+    display: grid;
+    padding-right: 24px;
+    padding-bottom: 12px;
+    min-height: 0;
+  }
+
+  &__opponent-message-container, &__user-message-container  {
+    height: max-content;
+    align-self: end;
+    margin-top: 24px;
+    box-shadow: @box-shadow-light;
+  }
+
+  &__opponent-message {
+    background-color: @bg-light;
+    padding: 12px;
+    color: @white;
+    border-radius: 6px;
+    width: 100%;
+
+  }
+
+  &__user-message {
+    background-color: @primary;
+    padding: 12px;
+    color: @black;
+    border-radius: 6px;
+    width: 100%;
+  }
+
+  &__nickname {
+    text-align: right;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  &__chat-input-container {
+    display: flex;
+    min-height: 200px;
+    padding-top: 24px;
+    padding-right: 24px;
+  }
+
+  &__chat-input {
+    resize: none;
+  }
+  
+  &__chat-btn {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  &__enemy, &__player {
+    height: 50%;
+  }
+  &__player {
+    border-top: 2px solid @bg-border;
+  }
+
+  &__gaming-area {
+    width: 100%;
+    height: 40%;
+    background-color: @bg-light;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  &__deck-area {
+    width: 100%;
+    height: 60%;
+    padding: 12px;
+  }
+
+  &__deck-area--top {
+    border-bottom: 2px solid @bg-border;
+  }
+
+  &__deck-area--bottom {
+    border-top: 2px solid @bg-border;
+  }
+
+  &__card {
+    margin-right: 12px;
+  }
+
+  &__card--player {
+    cursor: pointer;
+  }
+
+  &__card-object {
+    margin-right: 12px;
+  }
+}

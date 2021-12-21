@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import thunkMiddleware from 'redux-thunk';
-import { exampleReducer } from './example/reducer';
+import { roomReducer } from './room/reducer';
+import { userReducer } from './user/reducer';
 
 const rootReducer = combineReducers({
-  exampleReducer
+  userReducer,
+  room: roomReducer,
 });
 
 

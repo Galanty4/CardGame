@@ -1,4 +1,18 @@
-import { connection } from ".";
+import { store } from "../store";
+import { updateMessages } from "../store/user/actions";
+import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
+
+export const connection = new HubConnectionBuilder()
+.withUrl("/table")
+.configureLogging(LogLevel.Information)
+.build();
+
+connection.start().then(() => {
+  connection.on("ReceiveMessage", (user, message) => {
+    const messages = store.getState().userReducer.session.messages;
+    store.dispatch(updateMessages([...messages, {user, message}]))
+  });
+})
 
 export const joinRoom = async (user: string, room: string) => {
   try {
