@@ -7,7 +7,7 @@ export interface IGameCard {
   h: number | string;
   imgSrc: string;
   description?: string | React.ReactElement | ReactElement[],
-  spellPower?: string | number;
+  spellPower?: number;
 }
 const GameCard: React.FC<IGameCard> = (props) => {
   const { w, h, imgSrc, description, spellPower = 0 } = props;
@@ -27,7 +27,7 @@ const GameCard: React.FC<IGameCard> = (props) => {
       </div>
       <div className="game-card__description">
         <div className="game-card__description-text">
-          <b>Test</b>: Fireball Enemies
+          {description}
         </div>
       </div>
     </div>

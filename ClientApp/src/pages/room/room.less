@@ -67,4 +67,35 @@
     text-align: center;
     margin-top: 24px;
   }
+
+  &__enemy, &__player {
+    height: 50%;
+  }
+  &__player {
+    border-top: 2px solid @bg-border;
+  }
+
+  &__gaming-area {
+    width: 100%;
+    height: 40%;
+    background-color: @bg-light;
+  }
+  
+  &__deck-area {
+    width: 100%;
+    height: 60%;
+    padding: 12px;
+  }
+
+  &__deck-area--top {
+    border-bottom: 2px solid @bg-border;
+  }
+
+  &__deck-area--bottom {
+    border-top: 2px solid @bg-border;
+  }
+
+  &__card {
+    margin-right: 12px;
+  }
 }

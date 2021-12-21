@@ -2,6 +2,7 @@ import { Col, Row, Input, Button } from 'antd';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import GameCard from '../../components/Card/GameCard';
 import { sendMessage } from '../../signalR/invokers';
 import { RootState } from '../../store';
 
@@ -11,6 +12,7 @@ const Room: React.FC = () => {
   const [text, setText] = useState('');
   const user = useSelector((state: RootState) => state.userReducer);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const {enemyState, playerState} = useSelector((state: RootState) => state.room);
 
   const onSend = () => {
     sendMessage(text);
@@ -43,7 +45,26 @@ const Room: React.FC = () => {
   return (
     <Row className="room">
       <Col span={18}>
-
+        <Row className="room__enemy">
+          <Row className='room__deck-area room__deck-area--top'>
+            {enemyState.cardsInHand.map((el) => (
+              <div className='room__card' key={el.id}>
+                <GameCard w="200px" h="max-content" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+              </div>
+            ))}
+          </Row>
+        <Row className="room__gaming-area "></Row>
+        </Row>
+        <Row className='room__player'>
+          <Row className="room__gaming-area"></Row>
+          <Row className='room__deck-area room__deck-area--bottom'>
+          {playerState.cardsInHand.map((el) => (
+              <div className='room__card' key={el.id}>
+                <GameCard w="200px" h="max-content" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+              </div>
+            ))}
+          </Row>
+        </Row>
       </Col>
       <Col span={6} className="room__chat-container">
           <div className="room__chat">
