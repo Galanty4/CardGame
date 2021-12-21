@@ -6,14 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { BrowserRouter } from 'react-router-dom';
-
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+    <DndProvider backend={HTML5Backend}>
       <Provider store={store}>
           <App />
       </Provider>
+    </DndProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

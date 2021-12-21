@@ -1,8 +1,10 @@
 import { Col, Row, Input, Button } from 'antd';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useDrop } from 'react-dnd';
 import { useSelector } from 'react-redux';
 import GameCard from '../../components/Card/GameCard';
+import { ItemTypes } from '../../dragndrop/itemtypes';
 import { sendMessage } from '../../signalR/invokers';
 import { RootState } from '../../store';
 
@@ -13,7 +15,7 @@ const Room: React.FC = () => {
   const user = useSelector((state: RootState) => state.userReducer);
   const scrollRef = useRef<HTMLDivElement>(null);
   const {enemyState, playerState} = useSelector((state: RootState) => state.room);
-
+  const ref = useRef<HTMLDivElement>(null);
   const onSend = () => {
     sendMessage(text);
     setText('');
@@ -42,6 +44,17 @@ const Room: React.FC = () => {
     scrollRef.current?.scrollIntoView();
   }, [user.session.messages])
 
+  const [{ canDrop, isOverCurrent }, drop] = useDrop({
+    accept: ItemTypes.CARD,
+    canDrop: () => true,
+    collect: monitor => ({
+          hovered: monitor.isOver(),
+          canDrop: monitor.canDrop(),
+          isOverCurrent: monitor.isOver({ shallow: true })
+    })
+  });
+
+  drop(ref)
   return (
     <Row className="room">
       <Col span={18}>
@@ -49,18 +62,18 @@ const Room: React.FC = () => {
           <Row className='room__deck-area room__deck-area--top'>
             {enemyState.cardsInHand.map((el) => (
               <div className='room__card' key={el.id}>
-                <GameCard w="200px" h="max-content" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+                <GameCard id={el.id} w="200px" h="max-content" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
               </div>
             ))}
           </Row>
         <Row className="room__gaming-area "></Row>
         </Row>
         <Row className='room__player'>
-          <Row className="room__gaming-area"></Row>
+          <Row className="room__gaming-area" ref={ref} style={{backgroundColor: isOverCurrent ? '#757575' : '#424242'}}></Row>
           <Row className='room__deck-area room__deck-area--bottom'>
           {playerState.cardsInHand.map((el) => (
               <div className='room__card' key={el.id}>
-                <GameCard w="200px" h="max-content" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+                <GameCard draggable id={el.id} w="200px" h="max-content" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
               </div>
             ))}
           </Row>
