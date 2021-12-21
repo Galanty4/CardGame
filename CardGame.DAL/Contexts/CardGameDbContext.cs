@@ -19,6 +19,8 @@ namespace CardGame.DAL.Contexts
         public DbSet<Card> Cards { get; set; }
         public DbSet<Deck> Decks { get; set; }
         public DbSet<DeckCard> DecksCard { get; set; }
+        public DbSet<Game> Game { get; set; }
+        public DbSet<Player> Player { get; set; }
 
         private readonly string CurrentUser;
          public CardGameDbContext(DbContextOptions<CardGameDbContext> options, IUserResolverService userResolverService) : base(options)
@@ -34,6 +36,8 @@ namespace CardGame.DAL.Contexts
             modelBuilder.ApplyConfiguration(new DeckConfiguration());
             modelBuilder.ApplyConfiguration(new CardConfiguration());
             modelBuilder.ApplyConfiguration(new DeckCardConfiguration());
+            modelBuilder.ApplyConfiguration(new GameConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerConfiguration());
 
             var entityTypes = modelBuilder.Model.GetEntityTypes().Select(t => t.ClrType).ToList();
 

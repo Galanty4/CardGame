@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using CardGame.BLL.Entities;
 using CardGame.BLL.Models.Dto;
 

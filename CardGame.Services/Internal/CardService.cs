@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CardGame.BLL.Models.Dto;
 using CardGame.BLL.Services.Interfaces;

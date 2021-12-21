@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using CardGame.BLL.Models;
 
 namespace CardGame.BLL.Entities
@@ -11,6 +9,7 @@ namespace CardGame.BLL.Entities
         public Deck Deck { get; set; }
         public int CardId { get; set; }
         public Card Card { get; set; }
+        public ICollection<Player> Player { get; set; }
 
         public DeckCard(int deckId, int cardId)
         {
