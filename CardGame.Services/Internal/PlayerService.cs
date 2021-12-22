@@ -11,10 +11,14 @@ namespace CardGame.Services.Internal
     public class PlayerService : IPlayerService
     {
         private readonly IPlayerRepository _playerRepository;
+        private readonly IGameService _gameService;
+        private readonly IDeckService _deckService;
 
-        public PlayerService(IPlayerRepository playerRepository)
+        public PlayerService(IPlayerRepository playerRepository, IGameService gameService, IDeckService deckService)
         {
             _playerRepository = playerRepository;
+            _gameService = gameService;
+            _deckService = deckService;
         }
         public async Task<PlayerDto> AddAsync(PlayerDto playerDto)
         {
@@ -27,6 +31,31 @@ namespace CardGame.Services.Internal
         {
             var playerEntry = await _playerRepository.GetAllAsync();
             return playerEntry.Select(x => new PlayerDto(x));
+        }
+        public async Task<IEnumerable<PlayerDto>> GetPlayersByGameIdAsync(int id)
+        {
+            var game = await _gameService.GetAsync(id);
+
+            var hostPlayer = await _playerRepository.GetAsync(game.HostPlayerId);
+            var guestPlayer = await _playerRepository.GetAsync(game.GuestPlayerId);
+
+            List<Player> players = new List<Player>() { hostPlayer , guestPlayer};
+            return players.Select(x => new PlayerDto(x));
+        }
+
+        public async Task<IEnumerable<PlayerDeckDto>> GetPlayersWithDeckByGameIdAsync(int id)
+        {
+            var game = await _gameService.GetAsync(id);
+
+            var hostPlayer = await _playerRepository.GetAsync(game.HostPlayerId);
+            var hostPlayerDeck = await _deckService.GetDeckWithCardsAsync(hostPlayer.DeckId);
+            var guestPlayer = await _playerRepository.GetAsync(game.GuestPlayerId);
+            var guestPlayerDeck = await _deckService.GetDeckWithCardsAsync(guestPlayer.DeckId);
+
+            List<PlayerDeckDto> players = new List<PlayerDeckDto>();
+            players.Add(new PlayerDeckDto(hostPlayer, hostPlayerDeck));
+            players.Add(new PlayerDeckDto(guestPlayer, guestPlayerDeck));
+            return players;
         }
 
         public async Task<PlayerDto> GetAsync(int id)

@@ -9,17 +9,18 @@ namespace CardGame.DAL.Configuration
         public void Configure(EntityTypeBuilder<Game> builder)
         {
             builder
-               .Ignore(entity => entity.GuestPlayer);
+               .ToTable(nameof(Game))
+                .HasKey(game => game.Id);
             builder
-                .HasOne(entity => entity.HostPlayer)
-                .WithMany(deck => deck.Game)
+                .HasOne(game => game.HostPlayer)
+                .WithMany(player => player.Game)
                 .HasForeignKey(entity => entity.HostPlayerId)
-                .HasPrincipalKey(player => player.Id);
+                .OnDelete(DeleteBehavior.NoAction);
             builder
-                .HasOne(entity => entity.GuestPlayer)
-                .WithMany(deck => deck.Game)
-                .HasForeignKey(entity => entity.GuestPlayerId).OnDelete(DeleteBehavior.NoAction)
-                .HasPrincipalKey(player => player.Id);
+                .HasOne(game => game.GuestPlayer)
+                .WithMany(player => player.GameEnemy)
+                .HasForeignKey(entity => entity.GuestPlayerId)
+                .OnDelete(DeleteBehavior.NoAction); ;
         }
     }
 }

@@ -11,7 +11,8 @@ namespace CardGame.BLL.Entities
         public int Health { get; set; }
         public int DeckId { get; set; }
         public DeckCard DeckCard { get; set; }
-        public  ICollection<Game> Game { get; set; }
+        public ICollection<Game> Game { get; set; }
+        public ICollection<Game> GameEnemy { get; set; }
 
         public Player(PlayerDto playerDto)
         {

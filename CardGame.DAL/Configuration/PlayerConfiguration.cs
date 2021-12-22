@@ -10,13 +10,12 @@ namespace CardGame.DAL.Configuration
         {
             builder
                 .ToTable(nameof(Player))
-                .HasKey(entity => entity.Id);
+                .HasKey(player => player.Id);
             builder
-                .HasIndex(entity => entity.Name).IsUnique();
-            builder
-                .HasOne(entity => entity.DeckCard)
-                .WithMany(deck => deck.Player)
-                .HasForeignKey(entity => entity.DeckId);
+                .HasOne(player => player.DeckCard)
+                .WithMany(deckCard => deckCard.Player)
+                .HasForeignKey(player => player.DeckId)
+                .HasPrincipalKey(deckCard => deckCard.Id);
         }
     }
 }

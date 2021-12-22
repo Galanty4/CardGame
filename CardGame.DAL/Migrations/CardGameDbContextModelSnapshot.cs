@@ -51,8 +51,10 @@ namespace CardGame.DAL.Migrations
 
             modelBuilder.Entity("CardGame.BLL.Entities.DeckCard", b =>
                 {
-                    b.Property<int>("DeckId")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CardId")
                         .HasColumnType("int");
@@ -63,7 +65,7 @@ namespace CardGame.DAL.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("DeckId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -75,11 +77,100 @@ namespace CardGame.DAL.Migrations
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
 
-                    b.HasKey("DeckId", "CardId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CardId");
 
+                    b.HasIndex("DeckId");
+
                     b.ToTable("DeckCard");
+                });
+
+            modelBuilder.Entity("CardGame.BLL.Entities.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GuestPlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HostPlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PlayerIdRound")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Round")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuestPlayerId");
+
+                    b.HasIndex("HostPlayerId");
+
+                    b.ToTable("Game");
+                });
+
+            modelBuilder.Entity("CardGame.BLL.Entities.Player", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DeckId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Energy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Health")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeckId");
+
+                    b.ToTable("Player");
                 });
 
             modelBuilder.Entity("CardGame.BLL.Models.Card", b =>
@@ -143,9 +234,51 @@ namespace CardGame.DAL.Migrations
                     b.Navigation("Deck");
                 });
 
+            modelBuilder.Entity("CardGame.BLL.Entities.Game", b =>
+                {
+                    b.HasOne("CardGame.BLL.Entities.Player", "GuestPlayer")
+                        .WithMany("GameEnemy")
+                        .HasForeignKey("GuestPlayerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CardGame.BLL.Entities.Player", "HostPlayer")
+                        .WithMany("Game")
+                        .HasForeignKey("HostPlayerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("GuestPlayer");
+
+                    b.Navigation("HostPlayer");
+                });
+
+            modelBuilder.Entity("CardGame.BLL.Entities.Player", b =>
+                {
+                    b.HasOne("CardGame.BLL.Entities.DeckCard", "DeckCard")
+                        .WithMany("Player")
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeckCard");
+                });
+
             modelBuilder.Entity("CardGame.BLL.Entities.Deck", b =>
                 {
                     b.Navigation("DeckCard");
+                });
+
+            modelBuilder.Entity("CardGame.BLL.Entities.DeckCard", b =>
+                {
+                    b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("CardGame.BLL.Entities.Player", b =>
+                {
+                    b.Navigation("Game");
+
+                    b.Navigation("GameEnemy");
                 });
 
             modelBuilder.Entity("CardGame.BLL.Models.Card", b =>

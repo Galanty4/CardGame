@@ -10,7 +10,7 @@ namespace CardGame.DAL.Configuration
         {
             builder
                 .ToTable(nameof(DeckCard))
-                .HasKey(entity => new { entity.DeckId, entity.CardId });
+                .HasKey(entity => entity.Id);
             builder
                 .HasOne(entity => entity.Deck)
                 .WithMany(deck => deck.DeckCard)
