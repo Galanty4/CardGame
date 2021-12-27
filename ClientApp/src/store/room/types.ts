@@ -6,12 +6,12 @@ export interface RoomState {
 }
 
 export interface PlayerState {
-  cardsInHand:  Card[];
+  cardsInHand: Card[];
   deckCards: Card[]
   activeCards: Card[];
 }
 
-export interface Card  {
+export interface Card {
   id: Id;
   description: string;
   spellpower: number;

@@ -16,9 +16,10 @@ export interface IGameCard {
   flippable?: boolean;
   defaultFlipped?: boolean;
   canPlayerFlip?: boolean;
+  showBack?: boolean;
 }
 const GameCard: React.FC<IGameCard> = (props) => {
-  const { w, h, imgSrc, description, spellPower = 0, id, draggable, flippable, defaultFlipped, canPlayerFlip } = props;
+  const { w, h, imgSrc, description, spellPower = 0, id, draggable, flippable, defaultFlipped, canPlayerFlip, showBack } = props;
 
   const [{ opacity }, dragRef] = useDrag(
     () => ({
@@ -76,24 +77,38 @@ const GameCard: React.FC<IGameCard> = (props) => {
         </div>
     </ReactCardFlip>
     ) : (
-      <div ref={dragRef} onClick={() => setIsFlipped(true)} className="game-card game-card--front" style={{ width: w, height: h, opacity }}>
-        <div className="game-card__spellpower-container">
-          <div className="game-card__spellpower">
-            <b>
-              {spellPower}
-            </b>
+      <>
+        {!showBack ? (
+        <div ref={dragRef} className="game-card game-card--front" style={{ width: w, height: h, opacity }}>
+          <div className="game-card__spellpower-container">
+            <div className="game-card__spellpower">
+              <b>
+                {spellPower}
+              </b>
+            </div>
+          </div>
+          <div className="game-card__image-container">
+            <div style={{ backgroundImage: `url(${imgSrc})` }} className="game-card__image-bg" >
+            </div>
+          </div>
+          <div className="game-card__description">
+            <div className="game-card__description-text">
+              {description}
+            </div>
           </div>
         </div>
-        <div className="game-card__image-container">
-          <div style={{ backgroundImage: `url(${imgSrc})` }} className="game-card__image-bg" >
-          </div>
+        ): (
+        <div className="game-card game-card--back" style={{ width: w, height: h }}>
+          <div className="game-card__back-circle"></div>
+            <div className="game-card__back-row">
+              <div className="game-card__back-col"></div>
+              <div className="game-card__back-col"></div>
+              <div className="game-card__back-col"></div>
+              <div className="game-card__back-col"></div>
+            </div>
         </div>
-        <div className="game-card__description">
-          <div className="game-card__description-text">
-            {description}
-          </div>
-        </div>
-      </div>
+        )}
+      </>
     )}
     </>
   );

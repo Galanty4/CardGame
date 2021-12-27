@@ -77,7 +77,7 @@ const Room: React.FC = () => {
           <Row className='room__deck-area room__deck-area--top'>
             {enemyState.cardsInHand.map((el) => (
               <div className='room__card' key={el.id}>
-                <GameCard defaultFlipped flippable  id={el.id} w="200px" h="270px" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+                <GameCard defaultFlipped showBack id={el.id} w="200px" h="270px" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
               </div>
             ))}
           </Row>
