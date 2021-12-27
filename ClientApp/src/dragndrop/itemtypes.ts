@@ -1,3 +1,4 @@
 export enum ItemTypes {
-  CARD = "CARD"
+  CARD = "CARD",
+  CARD_OBJECT = "CARD_OBJECT",
 }

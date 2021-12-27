@@ -101,7 +101,7 @@ const Room: React.FC = () => {
           <Row className="room__gaming-area" ref={ref} style={{backgroundColor: isOverCurrent ? '#757575' : '#424242'}}>
           {playerState.activeCards.map((el) => (
             <div className='room__card-object' key={el.id}>
-              <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+              <CardObject draggable={turn === Turn.PLAYER_TURN} id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
             </div>
           ))}
           </Row>

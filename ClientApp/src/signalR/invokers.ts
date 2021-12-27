@@ -27,7 +27,6 @@ connection.start().then(() => {
     const turn = store.getState().room.turn;
     let cardsInHand = turn === Turn.PLAYER_TURN ? store.getState().room.playerState.cardsInHand : store.getState().room.enemyState.cardsInHand;
     const cardCopy = {...cardsInHand[cardId]};
-    console.log(cardCopy, cardsInHand, cardId);
     const activeCards = [...turn === Turn.PLAYER_TURN ? store.getState().room.playerState.activeCards : store.getState().room.enemyState.activeCards];
     activeCards.push(cardCopy)
     cardsInHand = cardsInHand.filter((el) => el.id !== cardId);
