@@ -1,6 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { makeMove } from './actions'
-import { Card, RoomState } from './types'
+import { store } from '..'
+import { changeTurn } from '../../signalR/invokers'
+import { changePlayers, changeStoreTurn, makeMove } from './actions'
+import { Card, RoomState, Turn } from './types'
 
 
 // imgSrc='/placeholder2.jpg' description={<span><b>Attack: </b> Fireball Enemies</span>} spellPower={Math.floor(Math.random() * 10)
@@ -68,7 +70,10 @@ const initialState: RoomState = {
     cardsInHand: initialPlayerState,
     deckCards: [],
     activeCards: [],
-  }
+  },
+  turn: Turn.PLAYER_TURN,
+  players: [],
+  playerTurnIndex: 0,
 }
 
 export const roomReducer = createReducer(initialState, (builder) => {
@@ -81,5 +86,17 @@ export const roomReducer = createReducer(initialState, (builder) => {
         state.playerState.cardsInHand = action.payload.cardsInHand;
         state.playerState.activeCards = action.payload.activeCards;
       }
+    }).addCase(changePlayers, (state, action) => {
+      state.players = action.payload.players;
+      if (action.payload.players.length === 2) {
+        const user = action.payload.name;
+        const turn = Math.floor(Math.random() * 2);
+        state.playerTurnIndex = turn;
+        state.turn = action.payload.players[turn] === user ? Turn.PLAYER_TURN : Turn.ENEMY_TURN;
+        changeTurn(turn);
+      } 
+    }).addCase(changeStoreTurn, (state, action) => {
+      state.playerTurnIndex = action.payload.turn
+      state.turn = state.players[action.payload.turn] === action.payload.name ? Turn.PLAYER_TURN : Turn.ENEMY_TURN;
     })
 })

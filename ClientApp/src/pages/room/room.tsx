@@ -83,7 +83,7 @@ const Room: React.FC = () => {
           </Row>
         <Row className="room__gaming-area ">
           {enemyState.activeCards.map((el) => (
-            <div className='room__card-object'>
+            <div className='room__card-object' key={el.id}>
               <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
             </div>
           ))}
@@ -92,7 +92,7 @@ const Room: React.FC = () => {
         <Row className='room__player'>
           <Row className="room__gaming-area" ref={ref} style={{backgroundColor: isOverCurrent ? '#757575' : '#424242'}}>
           {playerState.activeCards.map((el) => (
-            <div className='room__card-object'>
+            <div className='room__card-object' key={el.id}>
               <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
             </div>
           ))}

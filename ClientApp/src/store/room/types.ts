@@ -3,6 +3,9 @@ import { Id } from "../generics/generics";
 export interface RoomState {
   enemyState: PlayerState;
   playerState: PlayerState;
+  turn: Turn;
+  playerTurnIndex: number;
+  players: string[];
 }
 
 export interface PlayerState {
@@ -16,4 +19,9 @@ export interface Card {
   description: string;
   spellpower: number;
   imgSrc: string;
+}
+
+export enum Turn {
+  PLAYER_TURN,
+  ENEMY_TURN
 }
