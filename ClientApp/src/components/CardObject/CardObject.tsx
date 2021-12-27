@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from '../../dragndrop/itemtypes';
+import { attackCard } from '../../signalR/invokers';
 import { Id } from '../../store/generics/generics';
 
 import './CardObject.less'
@@ -10,10 +11,11 @@ export interface CardObjectProps {
   spellPower: number;
   imgSrc: string;
   draggable?: boolean;
+  droppable?: boolean;
 }
 
 const CardObject: React.FC<CardObjectProps> = (props) => {
-  const { id, spellPower, imgSrc, draggable } = props;
+  const { id, spellPower, imgSrc, draggable, droppable } = props;
 
   const [{ opacity }, dragRef] = useDrag(
     () => ({
@@ -29,13 +31,14 @@ const CardObject: React.FC<CardObjectProps> = (props) => {
 
   const [{ canDrop, isOverCurrent }, drop] = useDrop({
     accept: ItemTypes.CARD_OBJECT,
-    canDrop: () => true,
+    canDrop: () => !!droppable,
     collect: monitor => ({
           hovered: monitor.isOver(),
           canDrop: monitor.canDrop(),
           isOverCurrent: monitor.isOver({ shallow: true })
     }),
     drop: (item: {id: Id}) => {
+      attackCard(item.id, id)
     }
   });
 

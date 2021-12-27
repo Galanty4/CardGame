@@ -86,7 +86,7 @@ const Room: React.FC = () => {
         <Row className="room__gaming-area ">
           {enemyState.activeCards.map((el) => (
             <div className='room__card-object' key={el.id}>
-              <CardObject id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+              <CardObject droppable id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
             </div>
           ))}
         </Row>

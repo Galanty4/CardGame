@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { store } from '..'
 import { changeTurn } from '../../signalR/invokers'
-import { changePlayers, changeStoreTurn, makeMove } from './actions'
+import { cardAttack, changePlayers, changeStoreTurn, makeMove } from './actions'
 import { Card, RoomState, Turn } from './types'
 
 
@@ -98,5 +98,8 @@ export const roomReducer = createReducer(initialState, (builder) => {
     }).addCase(changeStoreTurn, (state, action) => {
       state.playerTurnIndex = action.payload.turn
       state.turn = state.players[action.payload.turn] === action.payload.name ? Turn.PLAYER_TURN : Turn.ENEMY_TURN;
+    }).addCase(cardAttack, (state, action) => {
+        state.playerState.activeCards = action.payload.playerActiveCards;
+        state.enemyState.activeCards = action.payload.enemyActiveCards;
     })
 })

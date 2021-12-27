@@ -1,8 +1,9 @@
 import { store } from "../store";
 import { updateMessages } from "../store/user/actions";
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
-import { changePlayers, changeStoreTurn, makeMove } from "../store/room/actions";
-import { Card, Turn } from "../store/room/types";
+import { cardAttack, changePlayers, changeStoreTurn, makeMove } from "../store/room/actions";
+import { Card, PlayerState, Turn } from "../store/room/types";
+import { Id } from "../store/generics/generics";
 
 export const connection = new HubConnectionBuilder()
 .withUrl("/table")
@@ -33,6 +34,26 @@ connection.start().then(() => {
     store.dispatch(makeMove({activeCards, cardsInHand, player: turn === Turn.PLAYER_TURN ? 'player' : 'enemy'}))
   });
 
+  connection.on("ReceivePlayerAttack", (user: string, attackingId: number, attackedId: number) => {
+    const {turn, enemyState, playerState} = store.getState().room;
+    const attackingState = turn === Turn.PLAYER_TURN ? playerState : enemyState;
+    const attackedState = turn === Turn.PLAYER_TURN ? enemyState : playerState ;
+
+    const attackingIndex = attackingState.activeCards.findIndex((el) => el.id === attackingId);
+    const attackedIndex = attackedState.activeCards.findIndex((el) => el.id === attackedId);
+
+    let attackingActiveCards = JSON.parse(JSON.stringify([...attackingState.activeCards]));
+    let attackedActiveCards = JSON.parse(JSON.stringify([...attackedState.activeCards]));
+
+    const attackingSpellpower = attackingActiveCards[attackingIndex].spellpower;
+    attackingActiveCards[attackingIndex].spellpower -= attackedActiveCards[attackedIndex].spellpower;
+    attackedActiveCards[attackedIndex].spellpower -= attackingSpellpower;
+
+    attackingActiveCards = attackingActiveCards.filter((el) => el.spellpower > 0);
+    attackedActiveCards = attackedActiveCards.filter((el) => el.spellpower > 0);
+
+    store.dispatch(cardAttack({enemyActiveCards: turn === Turn.PLAYER_TURN ? attackedActiveCards : attackingActiveCards, playerActiveCards: turn === Turn.PLAYER_TURN ? attackingActiveCards : attackedActiveCards}))
+  })
 })
 
 export const joinRoom = async (user: string, room: string) => {
@@ -67,7 +88,10 @@ export const activateCard = async (cardId: number) => {
   }
 }
 
-
-// ReceiveActivateCard
-
-// ActivateCard
+export const attackCard = async(attackingId: Id, attackedId: Id) => {
+  try {
+    await connection.invoke("PlayerAttack", attackingId, attackedId)
+  } catch (e) {
+    console.log(e)
+  }
+}
