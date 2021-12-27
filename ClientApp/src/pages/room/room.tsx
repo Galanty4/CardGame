@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import GameCard from '../../components/Card/GameCard';
 import CardObject from '../../components/CardObject/CardObject';
 import { ItemTypes } from '../../dragndrop/itemtypes';
-import { sendMessage } from '../../signalR/invokers';
+import { changeTurn, sendMessage } from '../../signalR/invokers';
 import { RootState } from '../../store';
 import { Id } from '../../store/generics/generics';
 import { makeMove } from '../../store/room/actions';
+import { Turn } from '../../store/room/types';
 
 import './room.less';
 
@@ -18,7 +19,7 @@ const Room: React.FC = () => {
   const user = useSelector((state: RootState) => state.userReducer);
   const scrollRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
-  const {enemyState, playerState} = useSelector((state: RootState) => state.room);
+  const {enemyState, playerState, turn, playerTurnIndex} = useSelector((state: RootState) => state.room);
   const ref = useRef<HTMLDivElement>(null);
   const onSend = () => {
     sendMessage(text);
@@ -50,7 +51,7 @@ const Room: React.FC = () => {
 
   const [{ canDrop, isOverCurrent }, drop] = useDrop({
     accept: ItemTypes.CARD,
-    canDrop: () => true,
+    canDrop: () => turn === Turn.PLAYER_TURN,
     collect: monitor => ({
           hovered: monitor.isOver(),
           canDrop: monitor.canDrop(),
@@ -69,10 +70,15 @@ const Room: React.FC = () => {
     }
   });
 
+  const onEndTurn = () => {
+    const changedTurn = playerTurnIndex === 0 ? 1 : 0;
+    changeTurn(changedTurn);
+  }
+
   drop(ref)
   return (
     <Row className="room">
-      <Col span={18}>
+      <Col className='room__board' span={18}>
         <Row className="room__enemy">
           <Row className='room__deck-area room__deck-area--top'>
             {enemyState.cardsInHand.map((el) => (
@@ -89,6 +95,7 @@ const Room: React.FC = () => {
           ))}
         </Row>
         </Row>
+        <Button className='room__turn-btn' onClick={onEndTurn} type={turn === Turn.PLAYER_TURN ? 'primary' : 'default'}>{turn === Turn.PLAYER_TURN ? "Zakończ turę" : "Tura przeciwnika trwa"}</Button>
         <Row className='room__player'>
           <Row className="room__gaming-area" ref={ref} style={{backgroundColor: isOverCurrent ? '#757575' : '#424242'}}>
           {playerState.activeCards.map((el) => (
