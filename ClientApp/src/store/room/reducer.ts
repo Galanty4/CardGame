@@ -10,25 +10,25 @@ const initialEnemyState: Card[] = [
   {
     id: 0,
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
-    spellpower: Math.floor(Math.random() * 10),
+    spellpower: 5,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 1,
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
-    spellpower: Math.floor(Math.random() * 10),
+    spellpower: 10,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 2,
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
-    spellpower: Math.floor(Math.random() * 10),
+    spellpower: 4,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 3,
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
-    spellpower: Math.floor(Math.random() * 10),
+    spellpower: 3,
     imgSrc: '/placeholder2.jpg' 
   },
 ]
@@ -37,25 +37,25 @@ const initialPlayerState: Card[] = [
   {
     id: 0,
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
-    spellpower: Math.floor(Math.random() * 10),
+    spellpower: 5,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 1,
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
-    spellpower: Math.floor(Math.random() * 10),
+    spellpower: 10,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 2,
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
-    spellpower: Math.floor(Math.random() * 10),
+    spellpower: 4,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 3,
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
-    spellpower: Math.floor(Math.random() * 10),
+    spellpower: 3,
     imgSrc: '/placeholder2.jpg' 
   },
 ]
@@ -71,7 +71,7 @@ const initialState: RoomState = {
     deckCards: [],
     activeCards: [],
   },
-  turn: Turn.PLAYER_TURN,
+  turn: Turn.NO_TURN,
   players: [],
   playerTurnIndex: 0,
 }

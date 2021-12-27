@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import GameCard from '../../components/Card/GameCard';
 import CardObject from '../../components/CardObject/CardObject';
 import { ItemTypes } from '../../dragndrop/itemtypes';
-import { changeTurn, sendMessage } from '../../signalR/invokers';
+import { activateCard, changeTurn, sendMessage } from '../../signalR/invokers';
 import { RootState } from '../../store';
 import { Id } from '../../store/generics/generics';
 import { makeMove } from '../../store/room/actions';
@@ -61,11 +61,7 @@ const Room: React.FC = () => {
       const cardIndex = playerState.cardsInHand.findIndex((el) => el.id === item.id);
 
       if (cardIndex !== -1) {
-        const cardCopy = {...playerState.cardsInHand[cardIndex]};
-        const activeCards = [...playerState.activeCards];
-        activeCards.push(cardCopy)
-        const cardsInHand = playerState.cardsInHand.filter((el) => el.id !== item.id);
-        dispatch(makeMove({activeCards, cardsInHand, player: 'player'}))
+        activateCard(cardIndex)
       }
     }
   });
@@ -95,7 +91,12 @@ const Room: React.FC = () => {
           ))}
         </Row>
         </Row>
-        <Button className='room__turn-btn' onClick={onEndTurn} type={turn === Turn.PLAYER_TURN ? 'primary' : 'default'}>{turn === Turn.PLAYER_TURN ? "Zakończ turę" : "Tura przeciwnika trwa"}</Button>
+        {turn === Turn.NO_TURN ? (
+          <Button className='room__turn-btn' onClick={onEndTurn} type='primary' disabled>Oczekiwanie na dołączenie przeciwnika</Button>
+
+        ) : (
+          <Button className='room__turn-btn' onClick={onEndTurn} type={turn === Turn.PLAYER_TURN ? 'primary' : 'default'}>{turn === Turn.PLAYER_TURN ? "Zakończ turę" : "Tura przeciwnika trwa"}</Button>
+        )}
         <Row className='room__player'>
           <Row className="room__gaming-area" ref={ref} style={{backgroundColor: isOverCurrent ? '#757575' : '#424242'}}>
           {playerState.activeCards.map((el) => (

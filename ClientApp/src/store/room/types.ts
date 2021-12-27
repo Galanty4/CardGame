@@ -23,5 +23,6 @@ export interface Card {
 
 export enum Turn {
   PLAYER_TURN,
-  ENEMY_TURN
+  ENEMY_TURN,
+  NO_TURN,
 }
