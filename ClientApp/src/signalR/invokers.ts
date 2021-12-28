@@ -27,10 +27,11 @@ connection.start().then(() => {
   connection.on("ReceiveActivateCard", (user: string, cardId: number) => {
     const turn = store.getState().room.turn;
     let cardsInHand = turn === Turn.PLAYER_TURN ? store.getState().room.playerState.cardsInHand : store.getState().room.enemyState.cardsInHand;
-    const cardCopy = {...cardsInHand[cardId]};
+    const cardCopy = {...cardsInHand.find((el) => el.id === cardId)} as Card;
     const activeCards = [...turn === Turn.PLAYER_TURN ? store.getState().room.playerState.activeCards : store.getState().room.enemyState.activeCards];
     activeCards.push(cardCopy)
     cardsInHand = cardsInHand.filter((el) => el.id !== cardId);
+    console.log(cardsInHand, cardId);
     store.dispatch(makeMove({activeCards, cardsInHand, player: turn === Turn.PLAYER_TURN ? 'player' : 'enemy'}))
   });
 
@@ -80,7 +81,7 @@ export const changeTurn = async (turn: number) => {
   }
 }
 
-export const activateCard = async (cardId: number) => {
+export const activateCard = async (cardId: Id) => {
   try {
     await connection.invoke("ActivateCard", cardId, 0);
   } catch (e) {

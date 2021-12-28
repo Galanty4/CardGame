@@ -58,11 +58,7 @@ const Room: React.FC = () => {
           isOverCurrent: monitor.isOver({ shallow: true })
     }),
     drop: (item: {id: Id}) => {
-      const cardIndex = playerState.cardsInHand.findIndex((el) => el.id === item.id);
-
-      if (cardIndex !== -1) {
-        activateCard(cardIndex)
-      }
+      activateCard(item.id)
     }
   });
 
