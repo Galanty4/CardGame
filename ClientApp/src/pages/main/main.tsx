@@ -13,7 +13,12 @@ interface FormValues {
   room: string;
 }
 
-const Main: React.FC = () => {
+interface IMain {
+  initialRoom?: string
+}
+
+const Main: React.FC<IMain> = ({ initialRoom }: IMain) => {
+  const btnClickSound = new Audio("/sfx/btn_click.mp3");
   const [form] = useForm<FormValues>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,21 +29,21 @@ const Main: React.FC = () => {
       navigate(`/room?roomId=${values.room}`);
     })
   }
-  
+
   return (
     <div className="login">
       <div className="login__modal">
         <div className="login__title">
           <h2>Logowanie</h2>
-          <Form form={form} labelCol={{span: 24}} wrapperCol={{span: 24}} onFinish={onSubmit}>
+          <Form form={form} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} onFinish={onSubmit}>
             <Form.Item label="Nazwa gracza" name="name">
-              <Input/>
+              <Input required />
             </Form.Item>
-            <Form.Item label="Nazwa pokoju" name="room">
-              <Input />
+            <Form.Item label="Nazwa pokoju" name="room" initialValue={initialRoom}>
+              <Input required />
             </Form.Item>
             <Form.Item className="login__btn">
-              <Button type="primary" htmlType="submit">Dołącz</Button>
+              <Button type="primary" htmlType="submit" onClick={() => btnClickSound.play()}>Dołącz</Button>
             </Form.Item>
           </Form>
         </div>
