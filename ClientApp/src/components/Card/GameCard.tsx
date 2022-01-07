@@ -9,8 +9,11 @@ export interface IGameCard {
   w: number | string;
   h: number | string;
   imgSrc: string;
+  name?: string | React.ReactElement | ReactElement[],
   description?: string | React.ReactElement | ReactElement[],
   spellPower?: number;
+  cost?: number;
+  health?: number;
   id: number | string;
   draggable?: boolean;
   flippable?: boolean;
@@ -19,7 +22,7 @@ export interface IGameCard {
   showBack?: boolean;
 }
 const GameCard: React.FC<IGameCard> = (props) => {
-  const { w, h, imgSrc, description, spellPower = 0, id, draggable, flippable, defaultFlipped, canPlayerFlip, showBack } = props;
+  const { w, h, imgSrc, name, description, spellPower = 0, cost = 0, health = 0, id, draggable, flippable, defaultFlipped, canPlayerFlip, showBack } = props;
 
   const [{ opacity }, dragRef] = useDrag(
     () => ({
@@ -48,10 +51,31 @@ const GameCard: React.FC<IGameCard> = (props) => {
     <> {flippable ? (
     <ReactCardFlip isFlipped={flipped} flipDirection="vertical">
         <div ref={dragRef} onClick={() => setFlip(true)} className="game-card game-card--front" style={{ width: w, height: h, opacity }}>
+        <div className="game-card__name-container">
+            <div className="game-card__name">
+              <b>
+                {name}
+              </b>
+            </div>
+          </div>
           <div className="game-card__spellpower-container">
             <div className="game-card__spellpower">
               <b>
                 {spellPower}
+              </b>
+            </div>
+          </div>
+          <div className="game-card__cost-container">
+            <div className="game-card__cost">
+              <b>
+                {cost}
+              </b>
+            </div>
+          </div>
+          <div className="game-card__health-container">
+            <div className="game-card__health">
+              <b>
+                {health}
               </b>
             </div>
           </div>
@@ -80,10 +104,31 @@ const GameCard: React.FC<IGameCard> = (props) => {
       <>
         {!showBack ? (
         <div ref={dragRef} className="game-card game-card--front" style={{ width: w, height: h, opacity }}>
+          <div className="game-card__name-container">
+            <div className="game-card__name">
+              <b>
+                {name}
+              </b>
+            </div>
+          </div>
           <div className="game-card__spellpower-container">
             <div className="game-card__spellpower">
               <b>
                 {spellPower}
+              </b>
+            </div>
+          </div>
+          <div className="game-card__cost-container">
+            <div className="game-card__cost">
+              <b>
+                {cost}
+              </b>
+            </div>
+          </div>
+          <div className="game-card__health-container">
+            <div className="game-card__health">
+              <b>
+                {health}
               </b>
             </div>
           </div>

@@ -75,14 +75,14 @@ const Room: React.FC = () => {
           <Row className='room__deck-area room__deck-area--top'>
             {enemyState.cardsInHand.map((el) => (
               <div className='room__card' key={el.id}>
-                <GameCard defaultFlipped showBack id={el.id} w="200px" h="270px" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+                <GameCard defaultFlipped showBack id={el.id} w="200px" h="270px" imgSrc={el.imgSrc} name={<span dangerouslySetInnerHTML={{__html: el.name}} />} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower}  cost={el.cost} health={el.health} />
               </div>
             ))}
           </Row>
         <Row className="room__gaming-area ">
           {enemyState.activeCards.map((el) => (
-            <div className='room__card-object' key={el.id}>
-              <CardObject droppable id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/>
+            <div className='room__card-object' key={el.id}> /*dodac tu health*/
+              <CardObject droppable id={el.id} spellPower={el.spellpower} imgSrc={el.imgSrc}/> 
             </div>
           ))}
         </Row>
@@ -104,7 +104,7 @@ const Room: React.FC = () => {
           <Row className='room__deck-area room__deck-area--bottom'>
           {playerState.cardsInHand.map((el) => (
               <div className='room__card room__card--player' key={el.id}>
-                <GameCard draggable id={el.id} w="200px"  h="270px" imgSrc={el.imgSrc} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower} />
+                <GameCard draggable id={el.id} w="200px"  h="270px" imgSrc={el.imgSrc} name={<span dangerouslySetInnerHTML={{__html: el.name}} />} description={<span dangerouslySetInnerHTML={{__html: el.description}} />} spellPower={el.spellpower}  cost={el.cost} health={el.health} />
               </div>
             ))}
           </Row>

@@ -1,3 +1,4 @@
+import { NotifyInfo } from "rc-field-form/lib/interface";
 import { Id } from "../generics/generics";
 
 export interface RoomState {
@@ -16,8 +17,11 @@ export interface PlayerState {
 
 export interface Card {
   id: Id;
+  name: string;
   description: string;
   spellpower: number;
+  cost: number;
+  health: number;
   imgSrc: string;
 }
 

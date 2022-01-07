@@ -9,26 +9,38 @@ import { Card, RoomState, Turn } from './types'
 const initialEnemyState: Card[] = [
   {
     id: 0,
+    name: '<span><b>Placeholder</b></span>',
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
     spellpower: 5,
+    cost: 4,
+    health: 2,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 1,
+    name: '<span><b>Placeholder</b></span>',
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
     spellpower: 10,
+    cost: 5,
+    health: 6,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 2,
+    name: '<span><b>Placeholder</b></span>',
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
     spellpower: 4,
+    cost: 4,
+    health: 7,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 3,
+    name: '<span><b>Placeholder</b></span>',
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
     spellpower: 3,
+    cost: 6,
+    health: 4,
     imgSrc: '/placeholder2.jpg' 
   },
 ]
@@ -36,26 +48,38 @@ const initialEnemyState: Card[] = [
 const initialPlayerState: Card[] = [
   {
     id: 0,
+    name: '<span><b>Placeholder</b></span>',
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
     spellpower: 5,
+    cost: 4,
+    health: 2,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 1,
+    name: '<span><b>Placeholder</b></span>',
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
     spellpower: 10,
+    cost: 5,
+    health: 6,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 2,
+    name: '<span><b>Placeholder</b></span>',
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
     spellpower: 4,
+    cost: 4,
+    health: 7,
     imgSrc: '/placeholder2.jpg' 
   },
   {
     id: 3,
+    name: '<span><b>Placeholder</b></span>',
     description: '<span><b>Attack: </b> Fireball Enemies</span>',
     spellpower: 3,
+    cost: 6,
+    health: 4,
     imgSrc: '/placeholder2.jpg' 
   },
 ]
